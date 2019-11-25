@@ -1,0 +1,145 @@
+{{ define "html/index.tmpl" }}
+<!doctype html>
+    <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Script-Type" content="text/javascript">
+    <meta http-equiv="Content-Style-Type" content="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        // 対象ファイルの拡張子
+        function getExtension(fileName) {
+            var ret;
+            if (!fileName) {
+                return ret;
+            }
+            var fileTypes = fileName.split(".");
+            var len = fileTypes.length;
+            if (len === 0) {
+                return ret;
+            }
+            ret = fileTypes[len - 1];
+            return ret;
+        }
+
+        var flag = 0; // zipファイルを選択していない場合のクリック発火でクルクルしないためのフラグ
+        // 対象ファイルがzipかどうか
+        function IsTxtFile(fileName) {
+            var Extension = getExtension(fileName);
+            if (Extension.toLowerCase() === "zip") {
+                flag++;
+            }
+            else {
+                alert("It is not a zip file.");
+            }
+        }
+
+        // uploadボタンのクリック後
+        function DisableButton(b) {
+            b.disabled = true;
+            b.value = 'Submitting';
+            b.form.submit();
+        }
+
+    </script>
+
+    <style type="text/css">
+        body {
+            font-family:-apple-system, BlinkMacSystemFont, "Helvetica Neue", "Segoe UI","Noto Sans Japanese","ヒラギノ角ゴ ProN W3", Meiryo, sans-serif;
+        }
+
+        /* アップロードボタン*/
+        input.upload_button {
+            font-size: 1.0em;
+            font-weight: bold;
+            padding: 8px 20px;
+            background-color: #009250;
+            color: #fff;
+            border-style: none;
+        }
+
+        /*アップロードボタンホバー*/
+        input.upload_button:hover {
+            background-color: #3DB680;
+            color: #fff;
+        }
+
+        /*ボックス全体*/
+		.accbox {
+		    margin: 2em 0;
+		    padding: 0;
+		    max-width: 465px;/*最大幅*/
+		}
+
+		/*ラベル*/
+		.accbox label {
+		    display: block;
+		    margin: 1.5px 0;
+		    padding : 11px 12px;
+		    color :#ffffff;
+		    font-weight: bold;
+		    background :#bdbdbd;
+		    cursor :pointer;
+		    transition: all 0.5s;
+		}
+
+		/*ラベルホバー時*/
+		.accbox label:hover {
+		    background :#dfdfdf;
+		}
+
+		/*チェックは隠す*/
+		.accbox input {
+		    display: none;
+		}
+
+		/*中身を非表示にしておく*/
+		.accbox .accshow {
+		    height: 0;
+		    padding: 0;
+		    overflow: hidden;
+		    opacity: 0;
+		    transition: 0.8s;
+		}
+
+		/*クリックで中身表示*/
+		.cssacc:checked + .accshow {
+		    height: auto;
+		    padding: 5px;
+		    background: #eaeaea;
+		    opacity: 1;
+		}
+    </style>
+
+    <title>{{ .title }}</title>
+    </head>
+    <body>
+        <h1>{{ .title }}</h1>
+        <form action="/" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label class="control-label" for="upload">Select a zip file:</label>
+                <input type="file" name="upload" id="elmFile" accept="application/zip" required>
+                <input class="upload_button" type="submit" id="btnUpload" value="upload" onclick="IsTxtFile(document.getElementById('elmFile').value);DisableButton(this);">
+            </div>
+        </form>
+        <p><strong>{{ .downloadMessage }}</strong><a href="results/{{ .downloadfile }}" download="{{ .downloadfile }}">{{ .downloadfile }}</a></p>
+        </br>
+        <div class="accbox">
+		  <label for="label1">README</label>
+		  <input type="checkbox" id="label1" class="cssacc" />
+		  <div class="accshow">
+            <p><strong>REQUIREMENTS</strong></p>
+            <ul>
+                <li>Chrome or Firefox</li>
+            </ul>
+            <p><strong>USAGE</strong></p>
+            <ul>
+                <li>Specify <strong>*.zip</strong> containing pdf.</li>
+                <li>Click <strong>[upload]</strong> button.</li>
+                <li>Please download csv file when the download link comes out.</li>
+            </ul>
+            <p><strong>AUTHER</strong></p>
+            <p>Kenta Goto</p>
+		  </div>
+		</div>
+    </body>
+{{ end }}
