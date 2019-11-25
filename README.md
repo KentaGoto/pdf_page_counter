@@ -16,3 +16,5 @@ Access http://localhost:8/ with Chrome or FireFox.
 - Go (1.9 or avobe)
 - nkf
 - pdfinfo
+
+\* Put nkf.exe and pdfinfo.exe in the same directory as main.go.
