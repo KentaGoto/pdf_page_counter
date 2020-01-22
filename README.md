@@ -13,7 +13,7 @@ Access http://localhost:8/ with Chrome or FireFox.
 ## REQUIRES
 
 - Windows
-- Go (1.9 or avobe)
+- Go (1.9 or above)
 - nkf
 - pdfinfo
 
