@@ -1,5 +1,5 @@
 # pdf_page_counter
-Count the number of pages in a PDF file.
+A tool to count PDF pages. The result will be returned in csv.  
 
 ## Usage  
 ```
