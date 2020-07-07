@@ -127,7 +127,7 @@ func main() {
 				//log.Println("Replaced path: " + replacedPath)
 
 				// csvに書き込み
-				fmt.Fprintln(csvFile, replacedPath, ",", page)
+				fmt.Fprintln(csvFile, replacedPath + "," + page)
 				counter++
 
 			}
