@@ -1,10 +1,7 @@
 package main
 
 import (
-	"bufio"
-	"encoding/csv"
 	"fmt"
-	"io"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -105,7 +102,7 @@ func main() {
 				log.Println("Processing... " + path)
 
 				// pdfinfoコマンドの出力をゲットする
-				pdfinfoOut, err := exec.Command("pdfinfo.exe", path).CombinedOutput()
+				pdfinfoOut, err := exec.Command("pdfinfo", path).CombinedOutput()
 				if err != nil {
 					fmt.Println("pdfinfo command Exec Error")
 				}
@@ -138,8 +135,8 @@ func main() {
 		csvFile.Close()
 
 		// nkfコマンドでBOM付きにする
-		errNkf := exec.Command("nkf.exe", "-w8", "--overwrite", rootDir+"\\"+resultFile).Run()
-		log.Println("nkf.exe", "-w8", "--overwrite", rootDir+"\\"+resultFile)
+		errNkf := exec.Command("nkf", "-w8", "--overwrite", rootDir+"\\"+resultFile).Run()
+		log.Println("nkf", "-w8", "--overwrite", rootDir+"\\"+resultFile)
 		if errNkf != nil {
 			fmt.Println("nkf command Exec Error")
 		}
@@ -182,12 +179,4 @@ func dirwalk(dir string) []string {
 	}
 
 	return paths
-}
-
-func newCsvWriter(w io.Writer, bom bool) *csv.Writer {
-	bw := bufio.NewWriter(w)
-	if bom {
-		bw.Write([]byte{0xEF, 0xBB, 0xBF})
-	}
-	return csv.NewWriter(bw)
 }
