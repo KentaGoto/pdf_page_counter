@@ -17,3 +17,6 @@ Access http://localhost:8/ with Chrome or FireFox.
 - nkf
 - pdfinfo
 - 7zip
+
+## License
+MIT
