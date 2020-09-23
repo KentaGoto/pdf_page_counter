@@ -20,3 +20,6 @@ Access http://localhost:8/ with Chrome or FireFox.
 
 ## License
 MIT
+
+## Author  
+Kenta Goto
